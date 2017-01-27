@@ -43,6 +43,10 @@ public class PID implements Tickable {
 		this.setpoint = _setpoint;
 	}
 
+	public double getSetpoint() {
+		return setpoint;
+	}
+
 	@Override
 	public void update() {
 		double input = this.source.getPos();

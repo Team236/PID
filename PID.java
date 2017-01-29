@@ -9,9 +9,8 @@ public class PID implements Tickable {
 	private volatile double setpoint;
 	private volatile double error;
 	private double errSum;
-	private double dInput;
-
-	private double lastInput;
+	private double delta;
+	private double lastError;
 
 	private double total;
 
@@ -49,20 +48,20 @@ public class PID implements Tickable {
 
 	@Override
 	public void update() {
-		double input = this.source.getPos();
+		//double input = this.source.getPos();
 
 		// Compute working error vars
 		error = setpoint - source.getPos();
 		errSum += error;
-		dInput = input - lastInput;
+		delta = error - lastError;
 
 		// Compute PID output
-		total = (gains.kP * error) + (gains.kI * errSum) - (gains.kD * dInput);
+		total = (gains.kP * error) + (gains.kI * errSum) - (gains.kD * delta);
 
 		// Set output to the computed value
 		output.setSpeed(total);
 
 		// Get ready for next update
-		lastInput = input;
+		lastError = error;
 	}
 }

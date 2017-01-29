@@ -50,6 +50,10 @@ public class PID implements Tickable {
 	public void update() {
 		//double input = this.source.getPos();
 
+		if (Math.abs(error) < 0.2) {
+			errSum = 0;
+		}
+
 		// Compute working error vars
 		error = setpoint - source.getPos();
 		errSum += error;

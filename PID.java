@@ -55,7 +55,7 @@ public class PID implements Tickable {
 		}
 
 		// Compute working error vars
-		error = setpoint - source.getPos();
+		error = setpoint - source.pidGet();
 		errSum += error;
 		delta = error - lastError;
 
@@ -63,7 +63,7 @@ public class PID implements Tickable {
 		total = (gains.kP * error) + (gains.kI * errSum) - (gains.kD * delta);
 
 		// Set output to the computed value
-		output.setSpeed(total);
+		output.pidSet(total);
 
 		// Get ready for next update
 		lastError = error;
